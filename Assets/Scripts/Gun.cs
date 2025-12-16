@@ -5,17 +5,23 @@ public class Gun : MonoBehaviour
     public GameObject BulletPrefab;
     public Transform FirePoint;
     public float Speed = 5f;
+    public float ShootForce = 1000f;
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
             Shoot();
+
+        if (Input.GetKey(KeyCode.A))
+            transform.Translate(Vector3.left * Speed * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.D))
+            transform.Translate(Vector3.right * Speed * Time.deltaTime);
     }
 
     void Shoot()
     {
-        var bulletInstance = Instantiate(BulletPrefab, FirePoint.position, Quaternion.identity);
-        bulletInstance.GetComponent<Rigidbody>().AddForce(transform.forward * 1000f);
+        var bulletInstance = Instantiate(BulletPrefab, FirePoint.position, FirePoint.rotation);
+        bulletInstance.GetComponent<Rigidbody>().AddForce(FirePoint.forward * ShootForce);
     }
-
 }

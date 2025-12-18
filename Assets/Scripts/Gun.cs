@@ -6,6 +6,17 @@ public class Gun : MonoBehaviour
     public Transform FirePoint;
     public float Speed = 5f;
     public float ShootForce = 1000f;
+    public AudioClip soundToPlay;
+
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = gameObject.GetComponent<AudioSource>();
+
+        if (soundToPlay != null)
+            audioSource.clip = soundToPlay;
+    }
 
     void Update()
     {
@@ -17,6 +28,9 @@ public class Gun : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
             transform.Translate(Vector3.right * Speed * Time.deltaTime);
+
+        if (Input.GetMouseButtonDown(0))
+            audioSource.PlayOneShot(soundToPlay);
     }
 
     void Shoot()
